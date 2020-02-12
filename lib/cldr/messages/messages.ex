@@ -319,26 +319,32 @@ defmodule Cldr.Message do
     Cldr.DateTime.to_string!(value)
   end
 
+  defp format_to_string({:ok, value}) do
+    format_to_string(value)
+  end
+
   defp format_to_string(value) do
     Kernel.to_string(value)
   end
 
   defp format_plural(arg, type, offset, plurals, args, options) do
+    opts = Keyword.delete(options, :currency)
+
     arg =
       arg
-      |> format!(args, options)
+      |> format!(args, opts)
       |> to_maybe_integer
 
-    formatted_arg = Cldr.Number.to_string!(arg - offset, options)
+    formatted_arg = Cldr.Number.to_string!(arg - offset, opts)
 
-    options =
-      options
+    opts =
+      opts
       |> Keyword.put(:type, type)
       |> Keyword.put(:arg, formatted_arg)
 
-    plural_type = Cldr.Number.PluralRule.plural_type(arg - offset, options)
+    plural_type = Cldr.Number.PluralRule.plural_type(arg - offset, opts)
     message = Map.get(plurals, arg) || Map.get(plurals, plural_type) || other(plurals, arg)
-    format(message, args, options)
+    format(message, args, opts)
   end
 
   @doc false
