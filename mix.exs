@@ -47,7 +47,7 @@ defmodule CldrMessages.MixProject do
   defp deps do
     [
       {:nimble_parsec, "~> 0.5 or ~> 1.0"},
-      {:ex_cldr_numbers, "~> 2.7"},
+      {:ex_cldr_numbers, "~> 2.16"},
       {:jason, "~> 1.1"},
       {:ex_cldr_dates_times, "~> 2.2", optional: true},
       {:ex_money, "~> 4.0 or ~> 5.0", optional: true},

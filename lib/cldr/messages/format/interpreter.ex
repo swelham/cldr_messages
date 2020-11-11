@@ -306,6 +306,8 @@ defmodule Cldr.Message.Interpreter do
   end
 
   defp format_plural(arg, type, offset, plurals, args, options) do
+    options = Keyword.delete(options, :currency)
+
     arg =
       arg
       |> format_list(args, options)
